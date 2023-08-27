@@ -12,18 +12,25 @@
 
 // import { useState } from "react";
 import { Menu, Button } from "antd";
-import { NavLink, useLocation } from "react-router-dom";
+import "./layout.css"
+import { useLocation } from "react-router-dom";
+import { DeploymentUnitOutlined, DesktopOutlined, FileOutlined, PieChartOutlined, SplitCellsOutlined, TeamOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
-function Sidenav({ color }) {
+function Sidenav(props) {
+  const { sideBrSub, setSideBrSub } = props
   const { pathname } = useLocation();
+  const [sidebrName, setSideBrName] = useState("")
   const page = pathname.replace("/", "");
+
+  let color = "#FF9A00"
 
   const dashboard = [
     <svg
-      width="20"
-      height="20"
+      width="40"
+      height="40"
       viewBox="0 0 20 20"
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/3000/svg"
       key={0}
     >
       <path
@@ -43,11 +50,11 @@ function Sidenav({ color }) {
 
   const tables = [
     <svg
-      width="20"
-      height="20"
+      width="40"
+      height="40"
       viewBox="0 0 20 20"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/3000/svg"
       key={0}
     >
       <path
@@ -65,11 +72,11 @@ function Sidenav({ color }) {
 
   const billing = [
     <svg
-      width="20"
-      height="20"
+      width="40"
+      height="40"
       viewBox="0 0 20 20"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/3000/svg"
       key={0}
     >
       <path
@@ -87,11 +94,11 @@ function Sidenav({ color }) {
 
   const rtl = [
     <svg
-      width="20"
-      height="20"
+      width="40"
+      height="40"
       viewBox="0 0 20 20"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/3000/svg"
       key={0}
     >
       <path
@@ -105,11 +112,11 @@ function Sidenav({ color }) {
 
   const profile = [
     <svg
-      width="20"
-      height="20"
+      width="40"
+      height="40"
       viewBox="0 0 20 20"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/3000/svg"
       key={0}
     >
       <path
@@ -121,126 +128,57 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const signin = [
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      key={0}
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M6 2C5.44772 2 5 2.44772 5 3V4H4C2.89543 4 2 4.89543 2 6V16C2 17.1046 2.89543 18 4 18H16C17.1046 18 18 17.1046 18 16V6C18 4.89543 17.1046 4 16 4H15V3C15 2.44772 14.5523 2 14 2C13.4477 2 13 2.44772 13 3V4H7V3C7 2.44772 6.55228 2 6 2ZM6 7C5.44772 7 5 7.44772 5 8C5 8.55228 5.44772 9 6 9H14C14.5523 9 15 8.55228 15 8C15 7.44772 14.5523 7 14 7H6Z"
-        fill={color}
-      ></path>
-    </svg>,
-  ];
+  const sideBrControll = (tabName) => {
+    if (sidebrName == tabName) {
+      setSideBrSub(0)
+      setSideBrName("")
 
-  const signup = [
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      key={0}
-    >
-      <path
-        d="M0,2A2,2,0,0,1,2,0H8a2,2,0,0,1,2,2V8a2,2,0,0,1-2,2H2A2,2,0,0,1,0,8Z"
-        transform="translate(4 4)"
-        fill={color}
-      />
-      <path
-        d="M2,0A2,2,0,0,0,0,2V8a2,2,0,0,0,2,2V4A2,2,0,0,1,4,2h6A2,2,0,0,0,8,0Z"
-        fill={color}
-      />
-    </svg>,
-  ];
+      return
+    }
+    setSideBrSub(300)
+    setSideBrName(tabName)
+  }
 
   return (
     <>
       <Menu theme="light" mode="inline">
-        <Menu.Item key="1">
-          <NavLink to="/dashboard">
-            <span
-              className="icon"
-              style={{
-                background: page === "dashboard" ? color : "",
-              }}
-            >
-              {dashboard}
-            </span>
-            <span className="label">Dashboard</span>
-          </NavLink>
+        <Menu.Item onClick={() => sideBrControll("TV")} className="menu-item " key="1">
+          <div className={window.location.pathname.includes("analytics") ? "menu-item-icon active" : "menu-item-icon"}>
+            <DesktopOutlined style={{ fontSize: "30px" }} />
+            <div className="menu-item-icon">TV</div>
+          </div>
         </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/tables">
-            <span
-              className="icon"
-              style={{
-                background: page === "tables" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Tables</span>
-          </NavLink>
+        <Menu.Item onClick={() => {
+          sideBrControll("Press")
+        }} className="menu-item" key="2">
+          <div className="menu-item-icon">
+            <FileOutlined style={{ fontSize: "30px" }} />
+            <div className="menu-item-icon">Press</div>
+          </div>
         </Menu.Item>
-        <Menu.Item key="3">
-          <NavLink to="/billing">
-            <span
-              className="icon"
-              style={{
-                background: page === "billing" ? color : "",
-              }}
-            >
-              {billing}
-            </span>
-            <span className="label">Billing</span>
-          </NavLink>
+        <Menu.Item onClick={() => sideBrControll("Outline Media")} className="menu-item" key="3">
+          <div className="menu-item-icon">
+            <PieChartOutlined style={{ fontSize: "30px" }} />
+            <div className="menu-item-icon">Outline Media</div>
+          </div>
         </Menu.Item>
-        <Menu.Item key="4">
-          <NavLink to="/rtl">
-            <span
-              className="icon"
-              style={{
-                background: page === "rtl" ? color : "",
-              }}
-            >
-              {rtl}
-            </span>
-            <span className="label">RTL</span>
-          </NavLink>
+        <Menu.Item onClick={() => sideBrControll("Social Media")} className="menu-item" key="4">
+          <div className="menu-item-icon">
+            <TeamOutlined style={{ fontSize: "30px" }} />
+            <div className="menu-item-icon">Social Media</div>
+          </div>
         </Menu.Item>
-        <Menu.Item className="menu-item-header" key="5">
-          Account Pages
+        <Menu.Item onClick={() => sideBrControll("eSports")} className="menu-item" key="6">
+          <div className="menu-item-icon">
+            <DeploymentUnitOutlined style={{ fontSize: "30px" }} />
+            <div className="menu-item-icon">eSports</div>
+          </div>
         </Menu.Item>
-        <Menu.Item key="6">
-          <NavLink to="/profile">
-            <span
-              className="icon"
-              style={{
-                background: page === "profile" ? color : "",
-              }}
-            >
-              {profile}
-            </span>
-            <span className="label">Profile</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="7">
-          <NavLink to="/sign-in">
-            <span className="icon">{signin}</span>
-            <span className="label">Sign In</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="8">
-          <NavLink to="/sign-up">
-            <span className="icon">{signup}</span>
-            <span className="label">Sign Up</span>
-          </NavLink>
+        <Menu.Item onClick={() => sideBrControll("Vision")} className="menu-item" key="7">
+          <div className="menu-item-icon">
+            <SplitCellsOutlined style={{ fontSize: "30px" }} />
+            <div className="menu-item-icon">Vision</div>
+          </div>
         </Menu.Item>
       </Menu>
     </>

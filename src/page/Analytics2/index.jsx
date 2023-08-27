@@ -1,16 +1,14 @@
 import React from "react";
-import MainHeader from "../../Components/header";
 import FormData from "./FormData"
 
-const Home=()=>{
+const Analytics2=()=>{
 
     return(
         <>
-        <MainHeader/>
         <FormData/>
         </>
     )
 
 }
 
-export default Home
+export default Analytics2

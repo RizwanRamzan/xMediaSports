@@ -14,12 +14,21 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Layout, Drawer, Affix } from "antd";
 import Sidenav from "./Sidenav";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../Components/header";
+import SideSubNav from "./SideSubNav";
+import { useMediaQuery } from "react-responsive";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
 function Main({ children }) {
+
+  const mobileResponsive = useMediaQuery({
+    query: '(max-width: 900px)'
+})
+
+
+  const [sideBr,setSideBr]= useState(mobileResponsive ? 0 :150)
+  const [sideBrSub,setSideBrSub] =useState(0)
   const [visible, setVisible] = useState(false);
   const [placement, setPlacement] = useState("right");
   const [sidenavColor, setSidenavColor] = useState("#1890ff");
@@ -43,61 +52,32 @@ function Main({ children }) {
   }, [pathname]);
 
   return (
+    <>
+    <Header setSideBr={setSideBr} setSideBrSub={setSideBrSub} sideBr={sideBr} />
     <Layout
       className={`layout-dashboard ${
         pathname === "profile" ? "layout-profile" : ""
       } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
     >
-      <Drawer
-        title={false}
-        placement={placement === "right" ? "left" : "right"}
-        closable={false}
-        onClose={() => setVisible(false)}
-        visible={visible}
-        key={placement === "right" ? "left" : "right"}
-        width={250}
-        className={`drawer-sidebar ${
-          pathname === "rtl" ? "drawer-sidebar-rtl" : ""
-        } `}
-      >
-        <Layout
-          className={`layout-dashboard ${
-            pathname === "rtl" ? "layout-dashboard-rtl" : ""
-          }`}
-        >
-          <Sider
-            trigger={null}
-            width={250}
-            theme="light"
-            className={`sider-primary ant-layout-sider-primary ${
-              sidenavType === "#fff" ? "active-route" : ""
-            }`}
-            style={{ background: sidenavType }}
-          >
-            <Sidenav color={sidenavColor} />
-          </Sider>
-        </Layout>
-      </Drawer>
       <Sider
-        breakpoint="lg"
         collapsedWidth="0"
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-        trigger={null}
-        width={250}
-        theme="light"
-        className={`sider-primary ant-layout-sider-primary ${
-          sidenavType === "#fff" ? "active-route" : ""
-        }`}
-        style={{ background: sidenavType }}
+        width={sideBr}
+        style={{ backgroundColor:"#ffffff",boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",height:"86vh",overflowY:"scroll"}}
       >
-        <Sidenav color={sidenavColor} />
+        <Sidenav sideBrSub={sideBrSub} setSideBrSub={setSideBrSub} color={sidenavColor} />
       </Sider>
-      <Layout>
+      <Sider
+        collapsedWidth="0"
+        width={sideBrSub}
+        style={{ backgroundColor:"#ffffff",boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",height:"86vh",overflowY:"scroll"}}
+      >
+        <SideSubNav setSideBr={setSideBr} setSideBrSub={setSideBrSub} color={sidenavColor} />
+      </Sider>
+      <Layout style={{height:"86vh",overflowY:"scroll"}}>
         <Content className="content-ant">{children}</Content>
       </Layout>
     </Layout>
+    </>
   );
 }
 

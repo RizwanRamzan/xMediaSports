@@ -1,0 +1,49 @@
+.menu-item{
+    height: 100px !important;
+    border-bottom: 1px solid lightgray;
+    border-radius: 0px !important;
+    padding: 0px !important;
+}
+
+
+
+.menu-item-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.active{
+    color: #FF9A00;
+}
+
+p{
+    color: "#706F6F";
+}
+
+.subMenuNav{
+    height: 50px !important;
+    border-radius: 0px !important;
+    padding: 30px !important;
+}
+
+.sub-menu-icon{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.ant-menu > .ant-menu-item:hover,
+.ant-menu > .ant-menu-submenu:hover,
+.ant-menu > .ant-menu-item-active,
+.ant-menu> .ant-menu-submenu-active,
+.ant-menu > .ant-menu-item-open,
+.ant-menu> .ant-menu-submenu-open,
+.ant-menu > .ant-menu-item-selected,
+.ant-menu > .ant-menu-submenu-selected {
+  color: #FF9A00;
+  border-bottom: 2px solid #FF9A00;
+  background-color: transparent;
+}
+

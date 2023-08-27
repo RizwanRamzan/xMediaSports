@@ -1,0 +1,84 @@
+.FormDtaa::-webkit-scrollbar {
+    width: 8px;
+    /* width of the entire scrollbar */
+}
+
+.FormDtaa::-webkit-scrollbar-track {
+    /* color of the tracking area */
+}
+
+.FormDtaa::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 3px solid lightgray;
+    /* creates padding around scroll thumb */
+}
+
+.pagination{
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    float: left;
+    width: 97%;
+ }
+
+ :where(.css-dev-only-do-not-override-w8mnev).ant-pagination .ant-pagination-item-active{
+    font-size: larger;
+    font-weight: 700;
+    background-color: #E4EDE7;
+    border-color: black !important;
+    a{
+        color: black !important;
+    }
+
+ }
+
+ :where(.css-dev-only-do-not-override-w8mnev).ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: #E4EDE7;
+    border-color: black !important;
+ }
+
+ :where(.css-dev-only-do-not-override-w8mnev).ant-table-wrapper .ant-table-pagination.ant-pagination {
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+ }
+
+ :where(.css-dev-only-do-not-override-1wazalj).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
+     box-shadow: #FF9A00 !important;
+    border-color: #FF9A00 !important;
+ }
+
+ :where(.css-dev-only-do-not-override-1wazalj).ant-picker:hover, :where(.css-dev-only-do-not-override-1wazalj).ant-picker-focused{
+    box-shadow: #FF9A00 !important;
+    border-color: #FF9A00 !important;  
+ }
+
+ :where(.css-dev-only-do-not-override-1wazalj).ant-pagination .ant-pagination-item-active a {
+    color: #FF9A00 !important;
+ }
+
+ :where(.css-dev-only-do-not-override-1wazalj).ant-pagination .ant-pagination-item-active{
+    border-color: #FF9A00 !important;
+ }
+
+
+
+ .ant-input-affix-wrapper {
+    height: 45px !important;
+    border: 1px solid #D4CFCC !important;
+    box-shadow: none !important;
+  }
+  
+  .ant-select-selector {
+    height: 45px !important;
+    border: 1px solid #D4CFCC !important;
+    display: flex;
+    align-items: center;
+    border-radius: 7px !important;
+    box-shadow: none !important;
+
+  }
+  
