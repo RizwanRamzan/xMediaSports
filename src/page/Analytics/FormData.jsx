@@ -96,12 +96,13 @@ const FormData = () => {
 
 
     const formHandler = async (value) => {
+        localStorage.clear()
+        setGetAllShows([])
+        setPageNumber([])
         const startDateSecond = Math.floor(new Date(value.startDate).getTime() / 1000)
         const endDateSecond = Math.floor(new Date(value.endDate).getTime() / 1000)
         const findCountry = country.find((item) => item.id == selectedCountry)
         const findStation = stations.flat().find((item) => item.id == selectedStation)
-
-
         setLoading(true)
         const onSuccess = (res) => {
             message.success("Get All Shows Selected Date")
@@ -209,7 +210,13 @@ const FormData = () => {
                                         getStations(e)
                                         setSelectedCountry(e)
                                         AssignForm.resetFields(['stations', 'startDate', 'endDate']);
-                                    }} placeholder="Plaese Select Multi Countrie">
+                                    }} placeholder="Plaese Select Multi Countrie"
+                                    optionFilterProp="children"
+                                    showSearch
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
+                                    >
                                         {country?.map((item, index) =>
                                             <Option key={index} value={item.id}>{item?.name}</Option>
                                         )}
@@ -221,7 +228,15 @@ const FormData = () => {
                                     <Select disabled={!stations.flat().length} onSelect={(e) => {
                                         setShows(e)
                                         setSelectedStation(e)
-                                    }} placeholder="Plaese Select Station">
+                                    }} placeholder="Plaese Select Station"
+
+                                    optionFilterProp="children"
+                                    showSearch
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
+                                    
+                                    >
                                         {stations.flat().map((item, index) =>
                                             <Option key={index} value={item?.id} >{item?.stations}</Option>
                                         )}
@@ -271,12 +286,12 @@ const FormData = () => {
                 </Form>
 
                 {/* Add Footer */}
-                <Footer />
+                <Footer data={pageNumber} getAllShows={storeShows}  />
 
                 {
                     storeShows &&
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Pagination onChange={(e, page) => pagination(e, page)} className="pagination" defaultCurrent={1} total={storeShows.length} pageSizeOptions={[10]} style={{ display: "flex", justifyContent: "center" }} />
+                    <div style={{ display: "flex", justifyContent: "center",alignItems:"center" }}>
+                        <Pagination onChange={(e, page) => pagination(e, page)} className="pagination" defaultCurrent={1} total={storeShows.length} pageSizeOptions={[10]} showSizeChanger={false} style={{ display: "flex", justifyContent: "center" }} />
                     </div>
                 }
 

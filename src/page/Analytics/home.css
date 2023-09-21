@@ -22,6 +22,9 @@
     border-radius: 8px;
     float: left;
     width: 97%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
  }
 
  :where(.css-dev-only-do-not-override-w8mnev).ant-pagination .ant-pagination-item-active{

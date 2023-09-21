@@ -24,6 +24,7 @@ const FormData = () => {
     const [getAllShows, setGetAllShows] = useState([])
     const [pageNumber, setPageNumber] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [values, setValues] = useState({ offset: 0, limit: 100 })
 
 
 
@@ -99,6 +100,9 @@ const FormData = () => {
 
 
     const formHandler = async (value) => {
+        localStorage.clear()
+        setGetAllShows([])
+        setPageNumber([])
         const startDateSecond = Math.floor(new Date(value.startDate).getTime() / 1000)
         const endDateSecond = Math.floor(new Date(value.endDate).getTime() / 1000)
         const findCountry = country.find((item) => item.id == selectedCountry)
@@ -127,7 +131,9 @@ const FormData = () => {
             channel_name: findStation?.tvg_id || "na",
             country: findCountry?.name || "na",
             start_utc: startDateSecond || "na",
-            stop_utc: endDateSecond || "na"
+            stop_utc: endDateSecond || "na",
+            // limit: values.limit,
+            // offset: values.offset,
         }
         await postRequestFormData(payload, url, true, onSuccess, onError)
 
@@ -174,25 +180,26 @@ const FormData = () => {
 
 
     useEffect(() => {
-        form.setFieldsValue({
-            countries: storeCard?.country || "--",
-            stations: storeCard?.channel_name || "--",
-            show: storeCard?.title || "--",
-            actors: storeCard?.actors || "--",
-            category: storeCard?.category || "--",
-            composer: storeCard?.composer || "--",
-            directors: storeCard?.directors || "--",
-            descriptions:storeCard?.desc || "--"
-        });
+        if (isModalOpen) {
+            form.setFieldsValue({
+                countries: storeCard?.country || "--",
+                stations: storeCard?.channel_name || "--",
+                show: storeCard?.title || "--",
+                actors: storeCard?.actors || "--",
+                category: storeCard?.category || "--",
+                composer: storeCard?.composer || "--",
+                directors: storeCard?.directors || "--",
+                descriptions: storeCard?.desc || "--"
+            });
+        }
     }, [isModalOpen])
-
 
 
 
     return (
         <Spin spinning={loading}>
             <div className="FormDtaa" style={{ height: "100%", overflowY: "auto" }}>
-                <Form form={AssignForm} style={{ padding: "20px" }} layout="vertical" onFinish={formHandler}>
+                <Form form={form} style={{ padding: "20px" }} layout="vertical" onFinish={formHandler}>
                     <Card title={<Breadcrumb
                         items={[
                             {
@@ -205,13 +212,26 @@ const FormData = () => {
                                 title: 'Analytic-I',
                             },
                         ]}
-                    />} >
+                    />}
+
+                    >
                         <Row gutter={20}>
                             <Col span={24}>
                                 <Form.Item name="search" label="Search" rules={[{ required: true, message: "please enter anything" }]}>
                                     <Input className="ant-input-affix-wrapper" placeholder="Search" />
                                 </Form.Item>
                             </Col>
+                            {/* <Col span={24}>
+                                <div className="extra">
+                                    <Form.Item name="offset" label="Offset" rules={[{ required: false, message: "please enter offset" }]}>
+                                        <Input onChange={(e) => setValues({ offset: e.target.value, limit: values.limit })} min={0} defaultValue={0} type="number" className="ant-input-affix-wrapper" placeholder="Enter offset" />
+                                    </Form.Item>
+
+                                    <Form.Item name="limit" label="Limit" rules={[{ required: false, message: "please enter limit" }]}>
+                                        <Input onChange={(e) => setValues({ offset: values.offset, limit: e.target.value })} min={0} defaultValue={100} type="number" className="ant-input-affix-wrapper" placeholder="limit" />
+                                    </Form.Item>
+                                </div>
+                            </Col> */}
                         </Row>
                         <Row gutter={20}>
                             <Col span={mobileResponsive ? 24 : 12}>
@@ -220,7 +240,13 @@ const FormData = () => {
                                         getStations(e)
                                         setSelectedCountry(e)
                                         AssignForm.resetFields(['stations', 'startDate', 'endDate']);
-                                    }} placeholder="Plaese Select Multi Countrie">
+                                    }} placeholder="Plaese Select Multi Countrie"
+                                    optionFilterProp="children"
+                                    showSearch
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
+                                    >
                                         {country?.map((item, index) =>
                                             <Option key={index} value={item.id}>{item?.name}</Option>
                                         )}
@@ -232,7 +258,14 @@ const FormData = () => {
                                     <Select disabled={!stations.flat().length} onSelect={(e) => {
                                         setShows(e)
                                         setSelectedStation(e)
-                                    }} placeholder="Plaese Select Station">
+                                    }} placeholder="Plaese Select Station"
+                                    optionFilterProp="children"
+                                    showSearch
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
+                                    
+                                    >
                                         {stations.flat().map((item, index) =>
                                             <Option key={index} value={item?.id} >{item?.stations}</Option>
                                         )}
@@ -276,12 +309,12 @@ const FormData = () => {
                 </Form>
 
                 {/* Add Footer */}
-                <Footer />
+                <Footer data={pageNumber} getAllShows={storeShows} />
 
                 {
                     storeShows &&
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Pagination onChange={(e, page) => pagination(e, page)} className="pagination" defaultCurrent={1} total={storeShows.length} pageSizeOptions={[10]} style={{ display: "flex", justifyContent: "center" }} />
+                    <div style={{ display: "flex", justifyContent: "center"}}>
+                        <Pagination onChange={(e, page) => pagination(e, page)} className="pagination" defaultCurrent={1} total={storeShows.length} showSizeChanger={false} style={{ display: "flex", justifyContent: "center" }} />
                     </div>
                 }
 

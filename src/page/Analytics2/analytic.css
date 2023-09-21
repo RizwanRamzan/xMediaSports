@@ -35,6 +35,10 @@
 
  }
 
+ .ant-layout-footer{
+   padding: 0px 22px 20px !important;
+ }
+
  :where(.css-dev-only-do-not-override-w8mnev).ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
     background-color: #E4EDE7;
     border-color: black !important;
@@ -79,6 +83,20 @@
     align-items: center;
     border-radius: 7px !important;
     box-shadow: none !important;
+
+  }
+
+  .extra{
+   display: flex;
+   gap: 10px;
+   width: 100%;
+   justify-content: end;
+
+  }
+
+  .ant-input-affix{
+   height: 30px !important;
+   width: 70px !important;
 
   }
   

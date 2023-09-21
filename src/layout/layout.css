@@ -5,6 +5,14 @@
     padding: 0px !important;
 }
 
+.footerTop{
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 7px;
+    padding: 0px 20px;
+}
+
 
 
 .menu-item-icon{
